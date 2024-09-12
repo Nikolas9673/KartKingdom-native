@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Button } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import { Tabs } from "expo-router";
+import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Button,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Header: React.FC = () => {
+  const colorScheme = useColorScheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuPress = () => {
@@ -28,6 +42,37 @@ const Header: React.FC = () => {
               <Text style={styles.modalText}>Menu Item 1</Text>
               <Text style={styles.modalText}>Menu Item 2</Text>
               <Text style={styles.modalText}>Menu Item 3</Text>
+              <Tabs
+                screenOptions={{
+                  tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+                  headerShown: false,
+                }}
+              >
+                <Tabs.Screen
+                  name="index"
+                  options={{
+                    title: "Home",
+                    tabBarIcon: ({ color, focused }) => (
+                      <TabBarIcon
+                        name={focused ? "home" : "home-outline"}
+                        color={color}
+                      />
+                    ),
+                  }}
+                />
+                <Tabs.Screen
+                  name="explore"
+                  options={{
+                    title: "Explore",
+                    tabBarIcon: ({ color, focused }) => (
+                      <TabBarIcon
+                        name={focused ? "code-slash" : "code-slash-outline"}
+                        color={color}
+                      />
+                    ),
+                  }}
+                />
+              </Tabs>
             </View>
           </View>
         </Modal>
@@ -38,34 +83,34 @@ const Header: React.FC = () => {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 15,
     paddingVertical: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: "#ddd",
   },
   menuButton: {
     padding: 10,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   modalBackground: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
     width: 250,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   modalText: {
     fontSize: 18,
